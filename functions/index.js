@@ -1,7 +1,10 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-admin.initializeApp();
+var serviceAccount = require("./serviceAccountKey.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
 
 exports.generateToken = functions.https.onRequest(async (req, res) => {
   var uid = req.query.uid || req.body.uid;
